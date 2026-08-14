@@ -21,6 +21,17 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
   }, []);
 
   useEffect(() => {
+    const animationFrame = window.requestAnimationFrame(() => {
+      try {
+        setCustomCursor(window.localStorage.getItem("jtr-custom-cursor") !== "system");
+      } catch {
+        // Custom cursor remains the default if storage is unavailable.
+      }
+    });
+    return () => window.cancelAnimationFrame(animationFrame);
+  }, []);
+
+  useEffect(() => {
     const cursor = cursorRef.current;
     const body = document.body;
     let animationFrame = 0;
@@ -70,7 +81,15 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
   }, [customCursor]);
 
   const toggleCursor = () => {
-    setCustomCursor((enabled) => !enabled);
+    setCustomCursor((enabled) => {
+      const next = !enabled;
+      try {
+        window.localStorage.setItem("jtr-custom-cursor", next ? "custom" : "system");
+      } catch {
+        // The in-session toggle still works if storage is unavailable.
+      }
+      return next;
+    });
   };
 
   return (
