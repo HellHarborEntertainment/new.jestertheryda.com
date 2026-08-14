@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const nav = [
   ["Music", "/music"], ["Lore", "/lore"], ["Stream", "/stream"],
@@ -10,22 +10,74 @@ const nav = [
 export default function SiteChrome({ children }: { children: React.ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [time, setTime] = useState("--:--:--");
-  const [cursor, setCursor] = useState({ x: -100, y: -100, hot: false });
+  const [customCursor, setCustomCursor] = useState(true);
+  const cursorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const tick = () => setTime(new Intl.DateTimeFormat("en-US", { timeZone: "America/Los_Angeles", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false }).format(new Date()));
     tick();
     const clock = window.setInterval(tick, 1000);
-    const move = (event: MouseEvent) => setCursor({ x: event.clientX, y: event.clientY, hot: Boolean((event.target as HTMLElement | null)?.closest("a, button")) });
-    window.addEventListener("mousemove", move, { passive: true });
-    return () => { window.clearInterval(clock); window.removeEventListener("mousemove", move); };
+    return () => window.clearInterval(clock);
   }, []);
+
+  useEffect(() => {
+    const cursor = cursorRef.current;
+    const body = document.body;
+    let animationFrame = 0;
+
+    body.classList.toggle("custom-cursor-enabled", customCursor);
+    cursor?.classList.toggle("arcade-cursor--disabled", !customCursor);
+
+    const move = (event: PointerEvent) => {
+      if (!cursor || !customCursor || event.pointerType === "touch") return;
+      const x = event.clientX;
+      const y = event.clientY;
+      const target = event.target instanceof Element ? event.target : null;
+      const hot = Boolean(target?.closest("a, button, [role='button']"));
+
+      window.cancelAnimationFrame(animationFrame);
+      animationFrame = window.requestAnimationFrame(() => {
+        cursor.style.transform = `translate3d(${x}px,${y}px,0)`;
+        cursor.classList.toggle("arcade-cursor--hot", hot);
+      });
+    };
+    const crossEmbedBoundary = (event: PointerEvent) => {
+      const target = event.target instanceof Element ? event.target : null;
+      if (target?.closest("iframe")) cursor?.classList.add("arcade-cursor--embed");
+    };
+    const leaveEmbed = (event: PointerEvent) => {
+      const target = event.target instanceof Element ? event.target : null;
+      if (target?.closest("iframe")) cursor?.classList.remove("arcade-cursor--embed");
+    };
+    const leaveWindow = () => cursor?.classList.add("arcade-cursor--outside");
+    const enterWindow = () => cursor?.classList.remove("arcade-cursor--outside");
+
+    document.addEventListener("pointermove", move, { passive: true });
+    document.addEventListener("pointerover", crossEmbedBoundary, true);
+    document.addEventListener("pointerout", leaveEmbed, true);
+    document.documentElement.addEventListener("mouseleave", leaveWindow);
+    document.documentElement.addEventListener("mouseenter", enterWindow);
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      body.classList.remove("custom-cursor-enabled");
+      document.removeEventListener("pointermove", move);
+      document.removeEventListener("pointerover", crossEmbedBoundary, true);
+      document.removeEventListener("pointerout", leaveEmbed, true);
+      document.documentElement.removeEventListener("mouseleave", leaveWindow);
+      document.documentElement.removeEventListener("mouseenter", enterWindow);
+    };
+  }, [customCursor]);
+
+  const toggleCursor = () => {
+    setCustomCursor((enabled) => !enabled);
+  };
 
   return (
     <div className="site-stage">
       <div className="crt-lines" aria-hidden="true" />
       <div className="screen-glare" aria-hidden="true" />
-      <div className={`arcade-cursor ${cursor.hot ? "arcade-cursor--hot" : ""}`} style={{ transform: `translate3d(${cursor.x}px,${cursor.y}px,0)` }} aria-hidden="true" />
+      <div ref={cursorRef} className="arcade-cursor" aria-hidden="true" />
       <header className="cabinet-header">
         {/* Vinext's development RSC router currently throws during internal Link transitions; a full document navigation is deliberate here. */}
         {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
@@ -37,7 +89,20 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
           {nav.map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</a>)}
           <a href="https://hellharbor.com/shop.html" target="_blank" rel="noreferrer">Shop ↗</a>
         </nav>
-        <div className="cabinet-status"><span className="status-lamp" /> PST {time}</div>
+        <div className="cabinet-tools">
+          <div className="cabinet-status"><span className="status-lamp" /> PST {time}</div>
+          <button
+            className={customCursor ? "cursor-toggle cursor-toggle--active" : "cursor-toggle"}
+            type="button"
+            aria-label={`Use ${customCursor ? "system" : "custom"} cursor`}
+            aria-pressed={customCursor}
+            title={`Cursor: ${customCursor ? "custom" : "system"}. Click to switch.`}
+            onClick={toggleCursor}
+          >
+            <i aria-hidden="true" />
+            <span>{customCursor ? "CUSTOM" : "SYSTEM"}</span>
+          </button>
+        </div>
         <button className="cabinet-menu" type="button" aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? "CLOSE" : "MENU"}</button>
       </header>
       {children}
