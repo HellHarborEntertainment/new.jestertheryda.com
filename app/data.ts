@@ -17,22 +17,7 @@ export const releases: Release[] = [
   { title: "Feeding a Beast Called Hate", artist: "Poltergyst", year: "Featured", image: "/media/cover-fabch.webp", href: "https://nav.ThePoltergyst.com/fabch", kind: "FEATURED APPEARANCE", code: "FEAT-06" },
 ];
 
-export const socialLinks = [
-  ["Apple Music", "https://nav.JesterTheRyda.com/apple"],
-  ["Bandsintown", "https://nav.JesterTheRyda.com/bandsintown"],
-  ["Discord", "https://nav.JesterTheRyda.com/discord"],
-  ["Facebook", "https://nav.JesterTheRyda.com/facebook"],
-  ["Instagram", "https://nav.JesterTheRyda.com/instagram"],
-  ["Ko-fi", "https://nav.JesterTheRyda.com/kofi"],
-  ["Reddit", "https://nav.JesterTheRyda.com/reddit"],
-  ["Snapchat", "https://nav.JesterTheRyda.com/snapchat"],
-  ["SoundCloud", "https://nav.JesterTheRyda.com/soundcloud"],
-  ["Spotify", "https://nav.JesterTheRyda.com/spotify"],
-  ["TikTok", "https://nav.JesterTheRyda.com/tiktok"],
-  ["Twitch", "https://nav.JesterTheRyda.com/twitch"],
-  ["X / Twitter", "https://nav.JesterTheRyda.com/twitter"],
-  ["YouTube", "https://nav.JesterTheRyda.com/youtube"],
-];
+export const socialLinks = redirects.map(({ label, slug }) => [label, redirectPath(slug)] as const);
 
 export const biography = [
   "Jordin Bryant, known professionally as JesterTheRyda, is an American actor, director, musician, record producer and voiceover artist from Grays Harbor County, Washington. He is the founder and Chief Executive Officer of Hell Harbor Entertainment. After dropping out of school as a teenager, he devoted himself to learning the crafts he needed to entertain the world on his own terms.",
@@ -40,3 +25,4 @@ export const biography = [
   "Beyond music, Jester works in screen acting, voice acting and improvised character performance. His roleplay work across Grand Theft Auto V and Red Dead Redemption 2 communities sharpened his instinct for character voices, live storytelling and worlds that can change in real time.",
   "When he is not recording, acting or producing, he develops private game servers and interactive systems. Underneath the macabre carnival is a lifelong tinkerer: a creator who keeps turning curiosity into another show, another character and another world.",
 ];
+import { redirectPath, redirects } from "./redirects";

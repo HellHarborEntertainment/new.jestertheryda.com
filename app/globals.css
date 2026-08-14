@@ -215,6 +215,26 @@ img { display: block; max-width: 100%; }
 
 .error-page { min-height: 100vh; display: grid; place-items: center; align-content: center; padding: 120px 20px 60px; text-align: center; background: radial-gradient(circle,rgba(227,41,33,.3),transparent 40%),repeating-linear-gradient(0deg,#07080b 0 4px,#0b0d11 5px); }.error-code { font: 900 clamp(160px,25vw,400px)/.7 Arial,sans-serif; color: var(--red); text-shadow: 8px 0 var(--cyan); }.error-code span { color: transparent; -webkit-text-stroke: 4px var(--gold); }.error-page > p { color: var(--green); font: 9px var(--pixel); letter-spacing: .2em; }.error-page h1 { margin: 20px 0; font: 400 clamp(45px,6vw,90px)/.9 var(--vampiress); }.error-page > span { color: var(--aged); }.error-page a { margin-top: 30px; padding: 14px; border: 1px solid var(--cyan); color: var(--cyan); font: 9px var(--pixel); }
 
+.redirect-page { position: relative; min-height: 100svh; display: grid; place-items: center; overflow: hidden; padding: 130px 20px 80px; background: radial-gradient(circle at 50% 45%,rgba(227,41,33,.28),transparent 34%),repeating-linear-gradient(90deg,transparent 0 79px,rgba(101,244,238,.035) 80px),linear-gradient(#11121a,#040507); }
+.redirect-noise { position: absolute; inset: 0; opacity: .42; background-image: radial-gradient(rgba(255,255,255,.65) 1px,transparent 1px); background-size: 73px 73px; mask-image: radial-gradient(circle,#000,transparent 72%); }
+.redirect-terminal { position: relative; width: min(780px,100%); padding: clamp(34px,7vw,72px); border: 8px ridge #4d505b; background: repeating-linear-gradient(0deg,#07080b 0 3px,#0d1016 4px 5px); box-shadow: 18px 20px 0 rgba(0,0,0,.52),0 0 55px rgba(227,41,33,.2); text-align: center; }
+.redirect-lamps { position: absolute; inset: 13px 18px auto; display: flex; justify-content: space-between; }
+.redirect-lamps i { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 8px var(--gold); animation: bulbs 1.2s steps(1) infinite; }
+.redirect-lamps i:nth-child(3n) { background: var(--red); box-shadow: 0 0 8px var(--red); animation-delay: .4s; }
+.redirect-lamps i:nth-child(3n+2) { background: var(--cyan); box-shadow: 0 0 8px var(--cyan); animation-delay: .8s; }
+.redirect-terminal > p { margin: 10px 0 24px; color: var(--green); font: 9px var(--pixel); letter-spacing: .14em; text-shadow: 0 0 7px var(--green); }
+.redirect-code { display: inline-block; border: 1px solid var(--cyan); padding: 7px 9px; color: var(--cyan); font: 9px var(--pixel); box-shadow: 0 0 12px rgba(101,244,238,.2); }
+.redirect-terminal h1 { margin: 27px 0 12px; color: var(--cream); font-size: clamp(55px,9vw,105px); font-weight: 400; line-height: .82; text-shadow: 4px 3px var(--dark-red),-2px 0 var(--cyan); }
+.redirect-terminal h2 { margin: 24px 0; color: var(--gold); font: 900 clamp(18px,3.1vw,32px)/1 Arial,sans-serif; letter-spacing: .06em; }
+.redirect-progress { height: 13px; overflow: hidden; border: 2px ridge #474a55; padding: 2px; background: #030405; }
+.redirect-progress i { display: block; width: 100%; height: 100%; transform-origin: left; background: repeating-linear-gradient(90deg,var(--red) 0 18px,var(--gold) 19px 22px); box-shadow: 0 0 8px var(--red); animation: redirect-load .9s linear both; }
+@keyframes redirect-load { from { transform: scaleX(0); } }
+.redirect-terminal small { display: block; margin-top: 13px; color: var(--aged); font: 8px var(--pixel); letter-spacing: .1em; overflow-wrap: anywhere; }
+.redirect-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 35px; }
+.redirect-actions a { border: 1px solid var(--cyan); padding: 12px 14px; color: var(--cyan); font: 8px var(--pixel); }
+.redirect-actions a:first-child { border-color: var(--red); background: var(--red); color: #fff; box-shadow: 5px 5px 0 #000; }
+.redirect-actions a:hover,.redirect-actions a:focus-visible { background: var(--gold); border-color: var(--gold); color: #08090c; }
+
 .cabinet-footer { position: relative; display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: end; gap: 25px; padding: 70px 4vw 45px; border-top: 8px ridge #454854; background: linear-gradient(#191b22,#06070a); color: var(--aged); font: 9px var(--pixel); }.footer-bulbs { position: absolute; inset: 13px 4vw auto; display: flex; justify-content: space-between; }.cabinet-footer > div:not(.footer-bulbs) { display: flex; flex-direction: column; }.cabinet-footer .vampiress { color: var(--cream); font-size: 35px; text-shadow: 2px 1px var(--red); }.cabinet-footer small { color: var(--gold); }.cabinet-footer p { text-align: center; }.cabinet-footer > a { justify-self: end; color: var(--cyan); }
 
 @media (max-width: 1100px) {

@@ -99,7 +99,6 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
       <div ref={cursorRef} className="arcade-cursor" aria-hidden="true" />
       <header className="cabinet-header">
         {/* Vinext's development RSC router currently throws during internal Link transitions; a full document navigation is deliberate here. */}
-        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
         <a className="cabinet-brand" href="/" aria-label="JesterTheRyda home">
           <img src="/media/jtr-mark.png" alt="" />
           <span className="vampiress">JesterTheRyda</span>
