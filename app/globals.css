@@ -11,7 +11,7 @@
   --green: #8cf778;
   --line: rgba(244, 231, 196, .23);
   --pixel: "Courier New", Courier, monospace;
-  --vampiress: Vampiress, "Times New Roman", Georgia, serif;
+  --vampiress: "Times New Roman", Georgia, serif;
 }
 
 * { box-sizing: border-box; }
