@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 const nav = [
   ["Music", "/music"], ["Lore", "/lore"], ["Stream", "/stream"],
-  ["Shows", "/shows"], ["EPK", "/epk"], ["Social", "/social"], ["Links", "/links"], ["Contact", "/contact"],
+  ["Shows", "/shows"], ["EPK", "/epk"], ["Links", "/links"], ["Contact", "/contact"],
 ];
 
 export default function SiteChrome({ children }: { children: React.ReactNode }) {

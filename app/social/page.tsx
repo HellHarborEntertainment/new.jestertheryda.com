@@ -1,6 +1,25 @@
-import PageHero from "../components/page-hero";
-import SocialFeed from "../components/social-feed";
+import type { Metadata } from "next";
+import SocialRedirect from "./social-redirect";
+
+export const metadata: Metadata = {
+  title: "Social Links | JesterTheRyda",
+  description: "Official JesterTheRyda social links and community portals.",
+  robots: { index: false, follow: true },
+};
 
 export default function SocialPage() {
-  return <main className="subpage"><PageHero eyebrow="THE BARKER'S BOOTH" title="Social Feed" description="Fresh noise from JesterTheRyda across the internet, preserved from the original site's embedded feed." code="NETWORK // X" /><section className="page-section social-page-grid"><div><p className="terminal-label">PUBLIC TRANSMISSION</p><h2>I like talking shit on the internet.</h2><p>Follow the official account for music announcements, live-show notices, project updates and whatever else escapes the Funhouse.</p><a href="/twitter">FOLLOW ON X ↗</a></div><SocialFeed /></section></main>;
+  return (
+    <>
+      <meta httpEquiv="refresh" content="0;url=/links/" />
+      <SocialRedirect />
+      <main className="redirect-page">
+        <section className="redirect-terminal">
+          <p>NETWORK ROUTE UPDATED</p>
+          <h1 className="vampiress">Opening the Prize Counter</h1>
+          <h2>ALL SOCIAL PORTALS HAVE MOVED TO /LINKS</h2>
+          <a className="redirect-fallback" href="/links/">CONTINUE →</a>
+        </section>
+      </main>
+    </>
+  );
 }
