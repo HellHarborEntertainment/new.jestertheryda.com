@@ -36,9 +36,9 @@ export default function Home() {
             <button className="power-button" type="button" onClick={() => setCabinetOn(!cabinetOn)} aria-pressed={!cabinetOn}><i /> CRT POWER</button>
           </div>
         </div>
-        <button className="hero-character" type="button" onClick={() => setSecret(true)} aria-label="JesterTheRyda. Activate hidden character select.">
+        <button className="hero-character hero-character--illustrated" type="button" onClick={() => setSecret(true)} aria-label="JesterTheRyda. Activate hidden character select.">
           <span className="character-aura" />
-          <img src="/media/jtr-portrait.webp" alt="JesterTheRyda wearing sunglasses" />
+          <img src="/media/jtr-emote-flipoff.webp" alt="Cartoon JesterTheRyda wearing sunglasses and a jester hat" />
           <small>PLAYER 01</small>
         </button>
         <div className="arcade-floor" aria-hidden="true" />
